@@ -1,0 +1,5 @@
+1. Ruleaza tranzactia a.i. sa nu ajunga la completie (FARA ROLLBACK).
+2. Citeste postarile folosind urmatorul query.
+3. Observa dirty read-ul provocat in (Posts).[Body].
+4. ROLLBACK pentru tranzactie.
+5. Observa read-ul pentru (Posts).[Body].

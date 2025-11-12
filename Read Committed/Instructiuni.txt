@@ -1,0 +1,19 @@
+The Default: READ COMMITTED (without snapshot)
+        - SQL Server enforces this with locks:
+        - Writers take exclusive locks on rows they modify.
+        - Readers take shared locks to ensure data doesn’t change mid-read.
+
+READ_COMMITTED_SNAPSHOT ON
+        - Implemented using row versioning in tempdb.
+        - Writers create a new version of rows they modify.
+        - Readers under READ COMMITTED isolation automatically read the last committed version (the snapshot) instead of waiting for locks.
+
+Table Hint: WITH (READCOMMITTEDLOCK)
+        - Forces a query to use lock-based READ COMMITTED behavior, even if the database is in snapshot mode.
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+        - This is a session-level setting (only affects your current connection) that indicates the server we are going to operate in READ COMMITTED.
+
+As shown in the queries:
+        1. With locking: Snapshot ON, use READCOMMITTEDLOCK to force query into lock-based, even if the db is in snapshot mode.
+        2. With snapshot isolation: SNAPSHOT ON, none else. Read query gets the available snapshot stored in tempdb.

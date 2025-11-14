@@ -1,0 +1,11 @@
+Small hint: 
+        - tradu in romana ca sa vizualizezi nivelul - citiri repetetabile.
+The why? 
+        - Pentru ca putem avea date inconsistente la nivelul unei singure tranzactii care efectueaza mai multe query uri SELECT.
+De aceea:
+        - folosim un superset al READ COMMITTED, fiind similare in sensul ca nu permit citirea datelor non - committed
+        - DAR
+        - SHARED LOCKs sunt emise de query-urile READ si sunt tinute pana cand tranzactia (important) ajunge la completie.
+        - orice alta tranzactie este blocata din a updata aceste date.
+        - ATENTIE: alte tranzactii pot insera date care match-uiesc criteriile de cautare.
+        - EFECT: phantom reads 👻.

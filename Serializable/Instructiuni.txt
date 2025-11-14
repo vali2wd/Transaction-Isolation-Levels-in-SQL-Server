@@ -1,0 +1,4 @@
+Urmareste Repeatable Read. Serializable trateaza tranzactiile concurente in ordine.
+        1. Ruleaza select query din fisierul `Reads.sql`
+        2. Ruleaza query de insert din fisierul `Insert(...)`. La acest moment range locks sunt tinute de catre read query, iar aceasta tranzactie de insert va astepta pana la completia       citirii.
+        3. Observa ca nu exista phantom rows. Data s-a populat abia dupa ce am incheiat tranzactia de citire. Ne costa foarte multa performanta.

@@ -1,0 +1,4 @@
+1. Ruleaza Update fara Rollback.
+2. Ruleaza citire
+
+Este un nivel de izolare simplu, self-explainatory.

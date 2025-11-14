@@ -9,3 +9,20 @@ De aceea:
         - orice alta tranzactie este blocata din a updata aceste date.
         - ATENTIE: alte tranzactii pot insera date care match-uiesc criteriile de cautare.
         - EFECT: phantom reads 👻.
+
+ATENTIE: vor fi folositoare query-urile din fisierul Helper.sql pentru depanare. 
+
+1. Context - RC:
+        - ruleaza tranzactia de citire RC din 'The reads(...)'
+        - ruleaza la scurt timp (<10s) un query de update, care modifica un link type in 'Dirty Read', vezi fila 'Update for RR(...)'.
+        - restabileste datele folosind prima tranzactie din fisierul 'Update for RR(...)'.
+
+2. RR:
+        - ruleaza tranzactia de citire RR din 'The reads(...)'
+        - ruleaza la scurt timp (<10s) un query de update, care modifica un link type in 'Dirty Read', vezi fila 'Update for RR(...)'.
+        - restabileste datele folosind prima tranzactie din fisierul 'Update for RR(...)'.
+
+3. RR phantom read:
+        - ruleaza tranzactia de citire RR din 'The reads(...) care nu contine clauza WHERE (ultima din fila)'
+        - ruleaza la scurt timp (<10s) un query de insert, care insereaza date, vezi fila 'Update for RR(...)'.
+        - restabileste datele folosind prima tranzactie din fisierul 'Update for RR(...)'.

@@ -1,0 +1,27 @@
+Goal: Showcase Read Uncommitted Isolation Level allowing dirty reads.
+Why: Because in Read Uncommitted Isolation Level, it is possible to read uncommitted data from other transactions, leading to dirty reads. This is why we are going to demo how a reading of posts is blocked by a transaction that is updating the DateTime of a post, and then is rolled back
+
+1. Begin a transaction that updates the time of a post.
+        - USE: `Add milisecond to posts.sql`
+        IMPORTANT: clear rolling Transactions using helper.
+        IMPORTANT: Do not commit or rollback.
+
+2. Run the reading of posts
+        - USE: `Show type 2 posts.sql`
+        IMPORTANT: by this point, the query should be blocked.
+        IMPORTANT: you can show this with helper script.
+        IMPORTANT: not in a transaction.
+
+(This query's purpose is to provoke changes that we no longer want, so it will cause a dirty read.)
+3. Tap into the PostTypeId of posts.
+        - USE: `Change posts to type 1.sql`
+        IMPORTANT: not in a transaction.
+
+(This query's purpose is to block the reading query.)
+4. Rollback the milisecond update transaction.
+        - USE: `Add milisecond to posts.sql`
+
+5. Check the result at the reading of posts.
+        - USE: `Show type 2 posts.sql`
+
+Expected result: the reading of posts should show a dirty read of PostTypeId, 1.
